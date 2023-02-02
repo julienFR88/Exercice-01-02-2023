@@ -6,7 +6,8 @@ use Controller;
 
 class Main extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $this->render('index');
     }
 }

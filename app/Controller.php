@@ -1,13 +1,15 @@
 <?php
 
-abstract class Controller{
-    public function render(string $fichier, array $data = []){
+abstract class Controller
+{
+    public function render(string $fichier, array $data = [])
+    {
         extract($data);
 
         // On démarre le buffer de sortie
         ob_start();
 
-        // On génère la vue 
+        // On génère la vue
         require_once(ROOT.'views/'.$fichier.'.php');
 
         // On stocke le contenu dans $content

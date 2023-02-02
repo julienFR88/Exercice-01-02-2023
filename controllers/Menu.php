@@ -1,9 +1,9 @@
 <?php
 
-class Menu 
+class Menu extends Controller
 {
     public function index()
     {
-        echo "Je suis le menu";
+        $this->render('menu');
     }
 }

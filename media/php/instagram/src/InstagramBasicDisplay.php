@@ -4,15 +4,15 @@ namespace EspressoDev\InstagramBasicDisplay;
 
 class InstagramBasicDisplay
 {
-    const API_URL = 'https://graph.instagram.com/';
+    public const API_URL = 'https://graph.instagram.com/';
 
-    const API_OAUTH_URL = 'https://api.instagram.com/oauth/authorize';
+    public const API_OAUTH_URL = 'https://api.instagram.com/oauth/authorize';
 
-    const API_OAUTH_TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
-    
-    const API_TOKEN_EXCHANGE_URL = 'https://graph.instagram.com/access_token';
-    
-    const API_TOKEN_REFRESH_URL = 'https://graph.instagram.com/refresh_access_token';
+    public const API_OAUTH_TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
+
+    public const API_TOKEN_EXCHANGE_URL = 'https://graph.instagram.com/access_token';
+
+    public const API_TOKEN_REFRESH_URL = 'https://graph.instagram.com/refresh_access_token';
 
     private $_appId;
 
@@ -34,19 +34,19 @@ class InstagramBasicDisplay
 
     private $_connectTimeout = 20000;
 
-    public function __construct($config = null) 
+    public function __construct($config = null)
     {
         if (is_array($config)) {
             $this->setAppId($config['appId']);
             $this->setAppSecret($config['appSecret']);
             $this->setRedirectUri($config['redirectUri']);
-            
+
             if (isset($config['timeout'])) {
-                $this->setTimeout($config['timeout']);    
+                $this->setTimeout($config['timeout']);
             }
-            
+
             if (isset($config['connectTimeout'])) {
-                $this->setConnectTimeout($config['connectTimeout']);    
+                $this->setConnectTimeout($config['connectTimeout']);
             }
         } elseif (is_string($config)) {
             // For read-only
@@ -59,8 +59,10 @@ class InstagramBasicDisplay
     public function getLoginUrl($scopes = ['user_profile', 'user_media'], $state = '')
     {
         if (is_array($scopes) && count(array_intersect($scopes, $this->_scopes)) === count($scopes)) {
-            return self::API_OAUTH_URL . '?client_id=' . $this->getAppId() . '&redirect_uri=' . urlencode($this->getRedirectUri()) . '&scope=' . implode(',',
-                $scopes) . '&response_type=code' . ($state != '' ? '&state=' . $state : '');
+            return self::API_OAUTH_URL . '?client_id=' . $this->getAppId() . '&redirect_uri=' . urlencode($this->getRedirectUri()) . '&scope=' . implode(
+                ',',
+                $scopes
+            ) . '&response_type=code' . ($state != '' ? '&state=' . $state : '');
         }
 
         throw new InstagramBasicDisplayException("Error: getLoginUrl() - The parameter isn't an array or invalid scope permissions used.");
@@ -225,7 +227,7 @@ class InstagramBasicDisplay
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT_MS, $this->_timeout);
-        
+
         if ($method === 'POST') {
             curl_setopt($ch, CURLOPT_POST, count($params));
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));

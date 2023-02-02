@@ -30,34 +30,34 @@ namespace PHPMailer\PHPMailer;
  */
 class PHPMailer
 {
-    const CHARSET_ASCII = 'us-ascii';
-    const CHARSET_ISO88591 = 'iso-8859-1';
-    const CHARSET_UTF8 = 'utf-8';
+    public const CHARSET_ASCII = 'us-ascii';
+    public const CHARSET_ISO88591 = 'iso-8859-1';
+    public const CHARSET_UTF8 = 'utf-8';
 
-    const CONTENT_TYPE_PLAINTEXT = 'text/plain';
-    const CONTENT_TYPE_TEXT_CALENDAR = 'text/calendar';
-    const CONTENT_TYPE_TEXT_HTML = 'text/html';
-    const CONTENT_TYPE_MULTIPART_ALTERNATIVE = 'multipart/alternative';
-    const CONTENT_TYPE_MULTIPART_MIXED = 'multipart/mixed';
-    const CONTENT_TYPE_MULTIPART_RELATED = 'multipart/related';
+    public const CONTENT_TYPE_PLAINTEXT = 'text/plain';
+    public const CONTENT_TYPE_TEXT_CALENDAR = 'text/calendar';
+    public const CONTENT_TYPE_TEXT_HTML = 'text/html';
+    public const CONTENT_TYPE_MULTIPART_ALTERNATIVE = 'multipart/alternative';
+    public const CONTENT_TYPE_MULTIPART_MIXED = 'multipart/mixed';
+    public const CONTENT_TYPE_MULTIPART_RELATED = 'multipart/related';
 
-    const ENCODING_7BIT = '7bit';
-    const ENCODING_8BIT = '8bit';
-    const ENCODING_BASE64 = 'base64';
-    const ENCODING_BINARY = 'binary';
-    const ENCODING_QUOTED_PRINTABLE = 'quoted-printable';
+    public const ENCODING_7BIT = '7bit';
+    public const ENCODING_8BIT = '8bit';
+    public const ENCODING_BASE64 = 'base64';
+    public const ENCODING_BINARY = 'binary';
+    public const ENCODING_QUOTED_PRINTABLE = 'quoted-printable';
 
-    const ENCRYPTION_STARTTLS = 'tls';
-    const ENCRYPTION_SMTPS = 'ssl';
+    public const ENCRYPTION_STARTTLS = 'tls';
+    public const ENCRYPTION_SMTPS = 'ssl';
 
-    const ICAL_METHOD_REQUEST = 'REQUEST';
-    const ICAL_METHOD_PUBLISH = 'PUBLISH';
-    const ICAL_METHOD_REPLY = 'REPLY';
-    const ICAL_METHOD_ADD = 'ADD';
-    const ICAL_METHOD_CANCEL = 'CANCEL';
-    const ICAL_METHOD_REFRESH = 'REFRESH';
-    const ICAL_METHOD_COUNTER = 'COUNTER';
-    const ICAL_METHOD_DECLINECOUNTER = 'DECLINECOUNTER';
+    public const ICAL_METHOD_REQUEST = 'REQUEST';
+    public const ICAL_METHOD_PUBLISH = 'PUBLISH';
+    public const ICAL_METHOD_REPLY = 'REPLY';
+    public const ICAL_METHOD_ADD = 'ADD';
+    public const ICAL_METHOD_CANCEL = 'CANCEL';
+    public const ICAL_METHOD_REFRESH = 'REFRESH';
+    public const ICAL_METHOD_COUNTER = 'COUNTER';
+    public const ICAL_METHOD_DECLINECOUNTER = 'DECLINECOUNTER';
 
     /**
      * Email priority.
@@ -745,39 +745,39 @@ class PHPMailer
      *
      * @var string
      */
-    const VERSION = '6.1.4';
+    public const VERSION = '6.1.4';
 
     /**
      * Error severity: message only, continue processing.
      *
      * @var int
      */
-    const STOP_MESSAGE = 0;
+    public const STOP_MESSAGE = 0;
 
     /**
      * Error severity: message, likely ok to continue processing.
      *
      * @var int
      */
-    const STOP_CONTINUE = 1;
+    public const STOP_CONTINUE = 1;
 
     /**
      * Error severity: message, plus full stop, critical error reached.
      *
      * @var int
      */
-    const STOP_CRITICAL = 2;
+    public const STOP_CRITICAL = 2;
 
     /**
      * The SMTP standard CRLF line break.
      * If you want to change line break format, change static::$LE, not this.
      */
-    const CRLF = "\r\n";
+    public const CRLF = "\r\n";
 
     /**
      * "Folding White Space" a white space string used for line folding.
      */
-    const FWS = ' ';
+    public const FWS = ' ';
 
     /**
      * SMTP RFC standard line ending; Carriage Return, Line Feed.
@@ -794,14 +794,14 @@ class PHPMailer
      *
      * @var int
      */
-    const MAIL_MAX_LINE_LENGTH = 63;
+    public const MAIL_MAX_LINE_LENGTH = 63;
 
     /**
      * The maximum line length allowed by RFC 2822 section 2.1.1.
      *
      * @var int
      */
-    const MAX_LINE_LENGTH = 998;
+    public const MAX_LINE_LENGTH = 998;
 
     /**
      * The lower maximum line length allowed by RFC 2822 section 2.1.1.
@@ -811,7 +811,7 @@ class PHPMailer
      *
      * @var int
      */
-    const STD_LINE_LENGTH = 76;
+    public const STD_LINE_LENGTH = 76;
 
     /**
      * Constructor.
@@ -913,7 +913,7 @@ class PHPMailer
                 $str = preg_replace('/\r\n|\r/m', "\n", $str);
                 echo gmdate('Y-m-d H:i:s'),
                 "\t",
-                    //Trim trailing space
+                //Trim trailing space
                 trim(
                     //Indent for readability, except for trailing break
                     str_replace(
@@ -1552,8 +1552,10 @@ class PHPMailer
             // Sign with DKIM if enabled
             if (!empty($this->DKIM_domain)
                 && !empty($this->DKIM_selector)
-                && (!empty($this->DKIM_private_string)
-                    || (!empty($this->DKIM_private)
+                && (
+                    !empty($this->DKIM_private_string)
+                    || (
+                        !empty($this->DKIM_private)
                         && static::isPermittedPath($this->DKIM_private)
                         && file_exists($this->DKIM_private)
                     )
@@ -2401,9 +2403,9 @@ class PHPMailer
 
         // sendmail and mail() extract Bcc from the header before sending
         if ((
-                'sendmail' === $this->Mailer || 'qmail' === $this->Mailer || 'mail' === $this->Mailer
-            )
-            && count($this->bcc) > 0
+            'sendmail' === $this->Mailer || 'qmail' === $this->Mailer || 'mail' === $this->Mailer
+        )
+        && count($this->bcc) > 0
         ) {
             $result .= $this->addrAppend('Bcc', $this->bcc);
         }
@@ -2498,7 +2500,7 @@ class PHPMailer
                 if (static::ENCODING_8BIT === $this->Encoding) {
                     $result .= $this->headerLine('Content-Transfer-Encoding', static::ENCODING_8BIT);
                 }
-                // The only remaining alternatives are quoted-printable and base64, which are both 7bit compatible
+            // The only remaining alternatives are quoted-printable and base64, which are both 7bit compatible
             } else {
                 $result .= $this->headerLine('Content-Transfer-Encoding', $this->Encoding);
             }
@@ -3239,10 +3241,11 @@ class PHPMailer
                 }
                 $matchcount = preg_match_all('/[^\040\041\043-\133\135-\176]/', $str, $matches);
                 break;
-            /* @noinspection PhpMissingBreakStatementInspection */
+                /* @noinspection PhpMissingBreakStatementInspection */
             case 'comment':
                 $matchcount = preg_match_all('/[()"]/', $str, $matches);
-            //fallthrough
+                //fallthrough
+                // no break
             case 'text':
             default:
                 $matchcount += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $str, $matches);
@@ -3412,14 +3415,15 @@ class PHPMailer
                 // RFC 2047 section 5.3
                 $pattern = '^A-Za-z0-9!*+\/ -';
                 break;
-            /*
-             * RFC 2047 section 5.2.
-             * Build $pattern without including delimiters and []
-             */
-            /* @noinspection PhpMissingBreakStatementInspection */
+                /*
+                 * RFC 2047 section 5.2.
+                 * Build $pattern without including delimiters and []
+                 */
+                /* @noinspection PhpMissingBreakStatementInspection */
             case 'comment':
                 $pattern = '\(\)"';
-            /* Intentional fall through */
+                /* Intentional fall through */
+                // no break
             case 'text':
             default:
                 // RFC 2047 section 5.1

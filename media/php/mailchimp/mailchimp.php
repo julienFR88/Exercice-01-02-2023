@@ -15,7 +15,7 @@ class MailChimp
     private $api_key;
     private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
 
-    const TIMEOUT = 10;
+    public const TIMEOUT = 10;
 
     /*  SSL Verification
         Read before disabling:
@@ -423,7 +423,6 @@ class MailChimp
         if ($responseContent === false) {
             $this->last_error = curl_error($ch);
         } else {
-
             $headerSize = $response['headers']['header_size'];
 
             $response['httpHeaders'] = $this->getHeadersAsArray(substr($responseContent, 0, $headerSize));
